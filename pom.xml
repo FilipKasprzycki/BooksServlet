@@ -8,6 +8,8 @@
 	<name>BooksJDBC Maven Webapp</name>
 	<url>http://maven.apache.org</url>
 
+
+
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
@@ -23,8 +25,12 @@
 		</dependency>
 	</dependencies>
 
+
+
 	<build>
 		<finalName>BooksJDBC</finalName>
 	</build>
+
+
 
 </project>
