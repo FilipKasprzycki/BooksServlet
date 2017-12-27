@@ -18,24 +18,37 @@ import java.util.Properties;
  */
 public class DatabaseConnector {
 
+		
 	
-	
-	private static DatabaseConnector instance;
+	private static DatabaseConnector instance; // singleton design pattern
 	private static Statement statement;
 	
 	
-	
-	private DatabaseConnector() throws ClassNotFoundException, FileNotFoundException, IOException, SQLException {
-		instance = this;
 		
-		Class.forName( "com.mysql.jdbc.Driver" );
-		Connection connection = getConnection( "db.properties" );
-		statement = connection.createStatement();
+	private DatabaseConnector() throws Exception {
+		instance = this;
+
+		Connection connection;
+		
+		try {
+			Class.forName( "com.mysql.jdbc.Driver" );
+			connection = getConnection( "db.properties" );
+			statement = connection.createStatement();
+		} 
+		catch (ClassNotFoundException e) {
+			throw new Exception( "Can't find mysql driver class" );
+		} 
+		catch (FileNotFoundException e) {
+			throw new Exception( "db.properties file not found" );
+		} 
+		catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
-	
+		
 	
 			
-	private Connection getConnection( String path ) throws FileNotFoundException, IOException, SQLException {
+	private Connection getConnection( String path ) throws Exception {
 		Properties properties = new Properties();
 		
 		properties.load( new FileInputStream( path ) );
@@ -48,9 +61,16 @@ public class DatabaseConnector {
 	
 	
 	
-	public static DatabaseConnector getInstance() throws ClassNotFoundException, FileNotFoundException, IOException, SQLException {
-		return instance != null ? instance : new DatabaseConnector();
+	public static DatabaseConnector getInstance() throws Exception {
+		try {
+			return instance != null ? instance : new DatabaseConnector();
+		}
+		catch(Exception e) {
+			throw new Exception( "Can't return DatabaseConnector instance" );
+		}
 	}
+	
+	
 	
 	public Statement getStatement() {
 		return statement;
