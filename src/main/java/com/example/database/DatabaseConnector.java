@@ -1,5 +1,7 @@
 package com.example.database;
 
+
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -8,6 +10,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
+
+
 
 /*
  * Just a simple database connector
@@ -26,6 +30,7 @@ public class DatabaseConnector {
 	
 		
 	private DatabaseConnector() throws Exception {
+		
 		instance = this;
 
 		Connection connection;

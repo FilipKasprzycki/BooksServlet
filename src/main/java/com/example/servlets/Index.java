@@ -1,5 +1,7 @@
 package com.example.servlets;
 
+
+
 import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
@@ -11,14 +13,21 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.example.helper.CodeHelper;
 
+
+
 /**
  * Servlet that handling index page
  * 
  * Role: show all books table with possibility to full CRUD
  */
 
+
+
 @WebServlet(urlPatterns = {"/", "/index"})
 public class Index extends HttpServlet {
+	
+	
+	
 	private static final long serialVersionUID = 1L;
 	
 	
@@ -28,11 +37,12 @@ public class Index extends HttpServlet {
 		requestDispatcher.forward(request, response);
 	}
 
+	
+	
 	/**
 	 * POST request just call GET request :)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}
-
 }
