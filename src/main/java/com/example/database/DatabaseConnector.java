@@ -46,7 +46,8 @@ public class DatabaseConnector {
 	}
 		
 	
-			
+		
+	// creating connection using properties file
 	private Connection getConnection( String path ) {
 		
 		Properties properties = new Properties();

@@ -11,7 +11,7 @@
 
 
 	<dependencies>
-	
+
 		<!-- Unit tests -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -19,7 +19,8 @@
 			<version>3.8.1</version>
 			<scope>test</scope>
 		</dependency>
-		
+
+
 		<!-- Servlets -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -27,15 +28,36 @@
 			<version>3.1.0</version>
 			<scope>provided</scope>
 		</dependency>
-		
+
+		<!-- JSTL (library for JSP) -->
+	    <dependency>
+	    	<groupId>javax.servlet</groupId>
+	    	<artifactId>jstl</artifactId>
+	    	<version>1.2</version>
+		</dependency>
+<!-- 		<dependency>
+	        <groupId>taglibs</groupId>
+	        <artifactId>standard</artifactId>
+	        <version>1.1.2</version>
+    	</dependency> -->
+
 		<!-- Mysql driver -->
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>5.1.38</version>
 		</dependency>
-		
+
 	</dependencies>
+
+
+
+
+	<properties>
+		<maven.compiler.source>1.6</maven.compiler.source>
+		<maven.compiler.target>1.6</maven.compiler.target>
+	</properties>
+
 
 
 

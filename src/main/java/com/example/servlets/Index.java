@@ -42,10 +42,7 @@ public class Index extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-//		DatabaseConnector.getInstance();
 		Book book = BookDao.getInstance().getBookById( 1L );
-		System.out.println("Ksi¹¿ka: " + book.getTitle());
-//		Book book = new Book ( "Kryszta³ki gazu", 500 );
 		request.setAttribute( "book", book );		
 		
 		
