@@ -2,6 +2,7 @@ package com.example.dao;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +20,10 @@ public class BookDao {
 	
 	
 	
+	/*
+	 * Constructor
+	 */
+	
 	private BookDao() {
 		instance = this;
 		
@@ -31,17 +36,23 @@ public class BookDao {
 	
 	
 	
+	// getInstance
 	public static BookDao getInstance() {
 		return instance != null ? instance : new BookDao();
 	}
 	
 	
 	
+	/*
+	 * CRUD methods
+	 */
+	
+	// getBookById
 	public Book getBookById( Long id ) {
 		
 		Book book = null;
 		
-		String query = "SELECT * FROM " + CodeHelper.BOOK_TABLE + " WHERE id = ?";
+		String query = "SELECT * FROM book WHERE id = ?";
 		
 		try {
 			PreparedStatement preparedStatement = DatabaseConnector.getInstance().getConnection().prepareStatement( query );
@@ -62,11 +73,12 @@ public class BookDao {
 	
 	
 	
+	// getAllBooks
 	public List< Book > getAllBooks() {
 		
 		List< Book > books = new ArrayList< Book >();
 		
-		String query = "SELECT * FROM " + CodeHelper.BOOK_TABLE;
+		String query = "SELECT * FROM book";
 		
 		try {
 			PreparedStatement preparedStatement = DatabaseConnector.getInstance().getConnection().prepareStatement( query );			
@@ -85,5 +97,60 @@ public class BookDao {
 		}		
 		
 		return books;
+	}
+	
+	
+	
+	// addBook
+	public void addBook( Book book ) throws SQLException {
+		
+		PreparedStatement preparedStatement = null;
+		
+		String query = "INSERT INTO book (title, author, pages) VALUES (?, ?, ?)";
+		
+		try {
+			preparedStatement = DatabaseConnector.getInstance().getConnection().prepareStatement( query );
+			preparedStatement.setString( 1, book.getTitle() );
+			preparedStatement.setString( 2, book.getAuthor() );
+			preparedStatement.setInt( 3, book.getPages() );
+			
+			preparedStatement.executeUpdate();
+		} 
+		catch ( Exception e ) {
+			
+			e.printStackTrace();
+		}
+		finally {
+			if( preparedStatement != null ) {
+				preparedStatement.close();
+			}
+		}
+	}
+	
+	
+	
+	// deleteBook
+	public void deleteBook( Long id ) throws SQLException {
+		
+		PreparedStatement preparedStatement = null;
+		
+		String query = "DELETE FROM book WHERE id = ?";
+		
+		try {
+			preparedStatement = DatabaseConnector.getInstance().getConnection().prepareStatement( query );
+			
+			preparedStatement.setLong( 1, id );
+			
+			preparedStatement.executeUpdate();
+		} 
+		catch ( Exception e ) {
+			
+			e.printStackTrace();
+		}
+		finally {
+			if( preparedStatement != null ) {
+				preparedStatement.close();
+			}
+		}
 	}
 }

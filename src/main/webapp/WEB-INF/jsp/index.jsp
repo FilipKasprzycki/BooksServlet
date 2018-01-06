@@ -14,7 +14,7 @@
 
 
 <body>
-	<div class="container">
+	<div class="container" style="margin-top: 15px;">
 		<table class="table table-striped">
 			<thead>
 				<tr>
@@ -32,14 +32,14 @@
 					<td>${ book.title }</td>
 					<td>${ book.author }</td>
 					<td>${ book.pages }</td>
-					<td><button type="button" class="btn btn-warning">Edit</button>	<button type="button" class="btn btn-danger">Remove</button></td>
+					<td><a class="btn btn-warning">Edit</a>	<a class="btn btn-danger" href="remove?id=${ book.id }">Remove</a></td>
 				</tr>
 				</c:forEach>
 				
 			</tbody>
 		</table>
 		
-		<button type="button" class="btn btn-success">Add</button>
+		<a class="btn btn-success" href="add">Add</a>
 	</div>
 </body>
 </html>
