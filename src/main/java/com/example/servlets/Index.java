@@ -3,6 +3,11 @@ package com.example.servlets;
 
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Properties;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,7 +16,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.example.dao.BookDao;
+import com.example.database.DatabaseConnector;
 import com.example.helper.CodeHelper;
+import com.example.model.Book;
 
 
 
@@ -33,6 +41,14 @@ public class Index extends HttpServlet {
 	
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+//		DatabaseConnector.getInstance();
+		Book book = BookDao.getInstance().getBookById( 1L );
+		System.out.println("Ksi¹¿ka: " + book.getTitle());
+//		Book book = new Book ( "Kryszta³ki gazu", 500 );
+		request.setAttribute( "book", book );		
+		
+		
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher( CodeHelper.path( "index" ) );
 		requestDispatcher.forward(request, response);
 	}

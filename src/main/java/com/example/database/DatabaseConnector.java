@@ -2,8 +2,6 @@ package com.example.database;
 
 
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -26,14 +24,13 @@ public class DatabaseConnector {
 	
 	private static DatabaseConnector instance; // singleton design pattern
 	private static Statement statement;
+	private static Connection connection;
 	
 	
 		
-	private DatabaseConnector() throws Exception {
+	private DatabaseConnector() {
 		
 		instance = this;
-
-		Connection connection;
 		
 		try {
 			Class.forName( "com.mysql.jdbc.Driver" );
@@ -41,10 +38,7 @@ public class DatabaseConnector {
 			statement = connection.createStatement();
 		} 
 		catch (ClassNotFoundException e) {
-			throw new Exception( "Can't find mysql driver class" );
-		} 
-		catch (FileNotFoundException e) {
-			throw new Exception( "db.properties file not found" );
+			e.printStackTrace();
 		} 
 		catch (Exception e) {
 			e.printStackTrace();
@@ -53,31 +47,51 @@ public class DatabaseConnector {
 		
 	
 			
-	private Connection getConnection( String path ) throws Exception {
+	private Connection getConnection( String path ) {
+		
 		Properties properties = new Properties();
 		
-		properties.load( new FileInputStream( path ) );
+		try {
+			properties.load(getClass().getClassLoader().getResourceAsStream("db.properties"));
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
 		
-		return DriverManager.getConnection(
-				properties.getProperty( "url" ),
-				properties.getProperty( "username" ),
-				properties.getProperty( "password" ));
+		try {
+			return DriverManager.getConnection(
+					properties.getProperty( "url" ),
+					properties.getProperty( "username" ),
+					properties.getProperty( "password" ));
+		}
+		catch ( SQLException e ) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
 	
 	
-	public static DatabaseConnector getInstance() throws Exception {
-		try {
-			return instance != null ? instance : new DatabaseConnector();
-		}
-		catch(Exception e) {
-			throw new Exception( "Can't return DatabaseConnector instance" );
-		}
+	public static DatabaseConnector getInstance() {
+		return instance != null ? instance : new DatabaseConnector();		
+	}
+		
+	
+	
+	@Override
+	protected void finalize() throws Throwable {
+		connection.close();
 	}
 	
 	
 	
 	public Statement getStatement() {
 		return statement;
+	}
+	
+	
+	
+	public Connection getConnection() {
+		return connection;
 	}
 }
