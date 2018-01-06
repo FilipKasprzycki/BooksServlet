@@ -42,6 +42,7 @@ public class BookDao {
 		Book book = null;
 		
 		String query = "SELECT * FROM " + CodeHelper.BOOK_TABLE + " WHERE id = ?";
+		
 		try {
 			PreparedStatement preparedStatement = DatabaseConnector.getInstance().getConnection().prepareStatement( query );
 			
@@ -71,8 +72,12 @@ public class BookDao {
 			PreparedStatement preparedStatement = DatabaseConnector.getInstance().getConnection().prepareStatement( query );			
 			ResultSet resultSet = preparedStatement.executeQuery();
 			
-			while( resultSet.next() ) {
-				books.add( new Book( resultSet.getLong( 1 ), resultSet.getString( 2 ), resultSet.getInt( 3 ) ) );
+			while( resultSet.next() ) {				
+				books.add( new Book( 
+						resultSet.getLong( 1 ),
+						resultSet.getString( 2 ),
+						resultSet.getString( 3 ),
+						resultSet.getInt( 4 ) ) );
 			}
 		} 
 		catch ( Exception e ) {

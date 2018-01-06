@@ -7,7 +7,7 @@ public class CodeHelper {
 	
 	
 	public static final String DATABASE = "booksjdbc";
-	public static final String BOOK_TABLE = "books";
+	public static final String BOOK_TABLE = "book";
 	public static final String AUTHOR_TABLE = "authors";
 	public static final String BOOK_AUTHOR_TABLE = "book_author";
 	
