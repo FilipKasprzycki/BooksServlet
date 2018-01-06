@@ -3,6 +3,8 @@ package com.example.dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.example.database.DatabaseConnector;
 import com.example.helper.CodeHelper;
@@ -36,6 +38,7 @@ public class BookDao {
 	
 	
 	public Book getBookById( Long id ) {
+		
 		Book book = null;
 		
 		String query = "SELECT * FROM " + CodeHelper.BOOK_TABLE + " WHERE id = ?";
@@ -54,5 +57,28 @@ public class BookDao {
 		}
 		
 		return book;
+	}
+	
+	
+	
+	public List< Book > getAllBooks() {
+		
+		List< Book > books = new ArrayList< Book >();
+		
+		String query = "SELECT * FROM " + CodeHelper.BOOK_TABLE;
+		
+		try {
+			PreparedStatement preparedStatement = DatabaseConnector.getInstance().getConnection().prepareStatement( query );			
+			ResultSet resultSet = preparedStatement.executeQuery();
+			
+			while( resultSet.next() ) {
+				books.add( new Book( resultSet.getLong( 1 ), resultSet.getString( 2 ), resultSet.getInt( 3 ) ) );
+			}
+		} 
+		catch ( Exception e ) {
+			return null;
+		}		
+		
+		return books;
 	}
 }

@@ -7,6 +7,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import javax.servlet.RequestDispatcher;
@@ -42,8 +44,13 @@ public class Index extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		Book book = BookDao.getInstance().getBookById( 1L );
-		request.setAttribute( "book", book );		
+		//Book book = BookDao.getInstance().getBookById( 1L );
+		List< Book > books = BookDao.getInstance().getAllBooks();
+		
+		/*books.add( new Book( "Orkiszowe chmury", 311) );
+		books.add( new Book( "Psy na s³onecznej trawie", 997) );
+		books.add( new Book( "Pan Tadeusz 2", 112) );*/
+		request.setAttribute( "books", books );		
 		
 		
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher( CodeHelper.path( "index" ) );

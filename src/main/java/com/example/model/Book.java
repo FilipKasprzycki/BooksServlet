@@ -31,6 +31,13 @@ public class Book implements Serializable {
 	}
 	
 	
+	public Book( Long id, String title, int pages ) {
+		this.id = id;
+		this.title = title;
+		this.pages = pages;
+	}
+	
+	
 	
 	/*
 	 * Getters & setters
