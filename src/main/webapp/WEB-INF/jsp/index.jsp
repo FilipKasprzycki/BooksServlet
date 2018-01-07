@@ -32,7 +32,10 @@
 					<td>${ book.title }</td>
 					<td>${ book.author }</td>
 					<td>${ book.pages }</td>
-					<td><a class="btn btn-warning">Edit</a>	<a class="btn btn-danger" href="remove?id=${ book.id }">Remove</a></td>
+					<td>
+						<a class="btn btn-warning" href="edit?id=${ book.id }">Edit</a>	
+						<a class="btn btn-danger" href="remove?id=${ book.id }">Remove</a>
+					</td>
 				</tr>
 				</c:forEach>
 				

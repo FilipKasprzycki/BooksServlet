@@ -33,6 +33,9 @@ public class RemoveBook extends HttpServlet {
 	
 	
 	
+	/*
+	 * delete book by id
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		try {
@@ -52,19 +55,6 @@ public class RemoveBook extends HttpServlet {
 	 * POST request just call GET request :)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String title = request.getParameter( "title" );
-		String author = request.getParameter( "author" );
-		int pages = Integer.parseInt( request.getParameter( "pages" ) );
-		
-		//if( title != "" && author != "" && pages > 0 ) {
-			try {
-				BookDao.getInstance().addBook( new Book (title, author, pages ) );
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}		
-		//}
-		
 		doGet(request, response);
 	}
 }

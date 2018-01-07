@@ -26,13 +26,13 @@ import com.example.model.Book;
 
 
 /**
- * Servlet that handling adding new book
+ * Servlet that handling editing exist book
  */
 
 
 
-@WebServlet(urlPatterns = {"/add"})
-public class AddForm extends HttpServlet {
+@WebServlet(urlPatterns = {"/edit"})
+public class EditForm extends HttpServlet {
 	
 	
 	
@@ -41,34 +41,39 @@ public class AddForm extends HttpServlet {
 	
 	
 	/*
-	 * adding form
+	 * edit form
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		response.setCharacterEncoding("UTF-8");
 		request.setCharacterEncoding("UTF-8");
 		
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher( CodeHelper.path( "addForm" ) );
+		Book book = BookDao.getInstance().getBookById( Long.parseLong( (String) request.getParameter( "id" ) ) );
+		System.out.println(request.getParameter( "id" ));
+		request.setAttribute( "book", book );
+		
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher( CodeHelper.path( "editForm" ) );
 		requestDispatcher.forward(request, response);
 	}
 
 	
 	
 	/*
-	 * add book from form to database
+	 * save changes
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		response.setCharacterEncoding("UTF-8");
 		request.setCharacterEncoding("UTF-8");		
 		
+		Long id = Long.parseLong( request.getParameter( "id" ) );
 		String title = request.getParameter( "title" );
 		String author = request.getParameter( "author" );
 		int pages = Integer.parseInt( request.getParameter( "pages" ) );
 		
 		if( title != "" && author != "" && pages > 0 ) {
 			try {
-				BookDao.getInstance().addBook( new Book (title, author, pages ) );
+				BookDao.getInstance().updateBook( id, new Book (title, author, pages ) );
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}		

@@ -42,16 +42,14 @@ public class Index extends HttpServlet {
 	
 	
 	
+	/*
+	 * Shows all books
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		//Book book = BookDao.getInstance().getBookById( 1L );
 		List< Book > books = BookDao.getInstance().getAllBooks();
 		
-		/*books.add( new Book( "Orkiszowe chmury", 311) );
-		books.add( new Book( "Psy na s³onecznej trawie", 997) );
-		books.add( new Book( "Pan Tadeusz 2", 112) );*/
-		request.setAttribute( "books", books );		
-		
+		request.setAttribute( "books", books );			
 		
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher( CodeHelper.path( "index" ) );
 		requestDispatcher.forward(request, response);

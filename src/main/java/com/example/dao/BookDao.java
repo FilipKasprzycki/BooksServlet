@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.example.database.DatabaseConnector;
-import com.example.helper.CodeHelper;
 import com.example.model.Book;
 
 public class BookDao {
@@ -62,7 +61,7 @@ public class BookDao {
 			ResultSet resultSet = preparedStatement.executeQuery();
 			
 			resultSet.next();
-			book = new Book( resultSet.getString( 2 ), resultSet.getInt( 3 ) );
+			book = new Book( resultSet.getLong( 1 ), resultSet.getString( 2 ), resultSet.getString( 3 ), resultSet.getInt( 4 ) );
 		} 
 		catch ( Exception e ) {
 			return null;
@@ -140,6 +139,36 @@ public class BookDao {
 			preparedStatement = DatabaseConnector.getInstance().getConnection().prepareStatement( query );
 			
 			preparedStatement.setLong( 1, id );
+			
+			preparedStatement.executeUpdate();
+		} 
+		catch ( Exception e ) {
+			
+			e.printStackTrace();
+		}
+		finally {
+			if( preparedStatement != null ) {
+				preparedStatement.close();
+			}
+		}
+	}
+	
+	
+	
+	// updateBook
+	public void updateBook( Long id, Book book ) throws SQLException {
+		
+		PreparedStatement preparedStatement = null;
+		
+		String query = "UPDATE book SET title = ?, author = ?, pages = ? WHERE id = ?";
+		
+		try {
+			preparedStatement = DatabaseConnector.getInstance().getConnection().prepareStatement( query );
+
+			preparedStatement.setString( 1, book.getTitle() );
+			preparedStatement.setString( 2, book.getAuthor() );
+			preparedStatement.setInt( 3, book.getPages() );
+			preparedStatement.setLong( 4, id );
 			
 			preparedStatement.executeUpdate();
 		} 
